@@ -1,65 +1,42 @@
-﻿// See https://aka.ms/new-console-template for more information
-using System;
-
-Console.WriteLine("Hello, World!");
-
-//declaração
-
-
-int primeiroValor = 0;
-
-Console.WriteLine("digite o primeiro valor");
-string texto1 = Console.ReadLine();
-bool V1Valido = int.TryParse(texto1, out primeiroValor);
-if (V1Valido == false) {
-    Console.WriteLine("numero invalido");
-    return; 
-}
-if (primeiroValor > 10){
-    Console.WriteLine("numero invalido, acima de 10");
-    return;
-}
-
-
-int segundoValor = 0;
-
-Console.WriteLine("digite o segundo valor");
-string texto2 = Console.ReadLine();
-bool V2Valido = int.TryParse(texto2, out segundoValor);
-if (V2Valido == false)
+﻿
+using System.Data.Common;
+//ler linhas do arquivo CSV
+//PARA CADA LINHA, ULTILIZAR A FUNÇÃO SPLIT
+//SPLIT: RECEBE UM CARACER E RETORNA ARRAY 
+//ULTILIZAR UM FOR PARA MOSTRAR AS COLUNAS
+void executar()
 {
-    Console.WriteLine("numero invalido");
-    return;
+    string arq = @"C:\Users\2025105807\Documents\texto.csv";
+
+    string[] linhas = lerarquivo(arq);
+
+    foreach (var linha in linhas)
+    {
+      //  Console.WriteLine(linha);
+        string[] colunas = linha.Split(';');
+    //ultilizando for mostrar as colunas 
+
+    for (int i =0; i < colunas.Length ; i++)
+    {
+
+            Console.WriteLine($"{colunas[i].PadRight(10)}  ");
+   
+    }
+    }
+
 }
-if (segundoValor > 10)
+string[] lerarquivo (string arq)
 {
-    Console.WriteLine("numero invalido, acima de 10");
-    return;
+    try
+    {
+        string[] linhas = File.ReadAllLines(arq);
+        return linhas;
+        
+    }
+    catch 
+    {
+        Console.WriteLine($"erro ao ler arquivo");
+        return new string[0];
+    }
 }
-if (segundoValor < primeiroValor)
-{
-    Console.WriteLine("algo de errado não está certo");
-    return;
-}
-
-//regras
-
-
-int soma = primeiroValor + segundoValor;
-int subtracao = primeiroValor - segundoValor;
-int divisao = primeiroValor / segundoValor;
-int multiplicacao = primeiroValor * segundoValor;
-int resto = primeiroValor % segundoValor;
-
-
-//resultado
-    
-Console.WriteLine("O numero primario é:" + (primeiroValor));
-Console.WriteLine("O numero segundario é:" + (segundoValor));
-Console.WriteLine("O resultado da soma dos valores é:" + (soma));
-Console.WriteLine("O resultado da subtração dos valores é:" + (subtracao));
-Console.WriteLine("O resultado da multiplicação dos valores é:" + (multiplicacao));
-Console.WriteLine("O resultado da divisão dos valores é:" + (divisao));
-Console.WriteLine("O resultado do resto da divisão dos valores é:" + (resto));
-Console.WriteLine($"A divisão entre {primeiroValor} e {segundoValor} é {divisao} ");
-string.Concat("A multiplicação entre", primeiroValor, " é", segundoValor, "é", multiplicacao);
+executar();
